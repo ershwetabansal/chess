@@ -1,0 +1,26 @@
+{
+  "name": "Chess",
+  "version": "0.0.0",
+  "authors": [
+    "shweta bansal"
+  ],
+  "description": "Chess App",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-mocks": "~1.4.7",
+    "angular":"~1.4.7",
+    "angular-ui-router" : "~0.2.15",
+    "jquery" : "~2.1.3",
+    "bootstrap" : "~3.3.5"
+  }
+}
