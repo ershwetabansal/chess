@@ -22,6 +22,12 @@
           }
           return posArray;
         }
+        , getInitialPositions : function() {
+          return [{r:1,c:5}];
+        }
+        , canLeap : function() {
+          return false;
+        }
       },
       queen : {
         getPossiblePositions : function(pos) {
@@ -33,6 +39,12 @@
           getDiagPositions(row,col,posArray);
           return posArray;
         }
+        , getInitialPositions : function() {
+          return [{r:1,c:4}];
+        }
+        , canLeap : function() {
+          return false;
+        }
       },
       rook : {
         getPossiblePositions : function(pos) {
@@ -42,6 +54,12 @@
           getColPositions(row,col,posArray);
           return posArray;
         }
+        , getInitialPositions : function() {
+          return [{r:1,c:1},{r:1,c:8}];
+        }
+        , canLeap : function() {
+          return false;
+        }
       },
       bishop : {
         getPossiblePositions : function(pos) {
@@ -49,6 +67,12 @@
           var row = pos.r, col = pos.c;
           getDiagPositions(row,col,posArray);          
           return posArray;
+        }
+        , getInitialPositions : function() {
+          return [{r:1,c:3},{r:1,c:6}];
+        }
+        , canLeap : function() {
+          return false;
         }
       },
       knight : {
@@ -65,6 +89,12 @@
 
           return posArray;
         }
+        , getInitialPositions : function() {
+          return [{r:1,c:2},{r:1,c:7}];
+        }
+        , canLeap : function() {
+          return true;
+        }
       },
       pawn : {
         getPossiblePositions : function(pos) {
@@ -78,15 +108,12 @@
             if (pos.c < 8) posArray.push({r:pos.r+1, c: pos.c+1}); 
           }
           return posArray;
-        },
-        canKill : function(oldPos,newPos) {
-          if ((newPos.r === oldPos.r +1 || newPos.r === oldPos.r +2 ) && newPos.c === oldPos.c) {
-            return false;
-          } else if (newPos.r === oldPos.r + 1 && ( newPos.c === oldPos.c -1 ||  newPos.c === oldPos.c + 1) ) {
-            return true;
-          } else {
-            throw 'Invalid positions';
-          }
+        }
+        , getInitialPositions : function() {
+          return [{r:2,c:1},{r:2,c:2},{r:2,c:3},{r:2,c:4},{r:2,c:5},{r:2,c:6},{r:2,c:7},{r:2,c:8}];
+        }
+        , canLeap : function() {
+          return true;
         }
       }
     };

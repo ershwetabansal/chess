@@ -8,7 +8,7 @@
           <div ng-repeat="row in chessArray">
             <div class="row">
                 <div ng-repeat="square in row" class="col-md-1 col-sm-1 col-xs-1" ng-model="chessArray" style="border:1px solid black;height:40px;" data-drop="true" jqyoui-droppable="{index: {{$index}}, onDrop:'dropCallback(square, $index,$parent.$index)'}" ng-class="square.class" > 
-                  <div id="square{{$parent.$index}}{{$index}}" data-drag="true" data-jqyoui-options="{revert: 'invalid'}"  jqyoui-draggable="{index: {{$index}}, animate:true, onStart:'dragCallback(square,$index,$parent.$index)' }"><img ng-show="square.fill" ng-src="assets/{{square.image}}" width="30" height="30" ></div>
+                  <div id="square{{$parent.$index}}{{$index}}" data-drag="true" data-jqyoui-options="{revert: 'invalid'}"  jqyoui-draggable="{index: {{$index}}, animate:true, onStart:'dragCallback(square,$index,$parent.$index)' }"><img ng-show="square.image" ng-src="assets/{{square.image}}" width="30" height="30" ></div>
                 </div>
             </div>
           </div>
