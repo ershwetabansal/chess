@@ -14,23 +14,11 @@
     var square = {};
     var gridCol = 8;
     var gridRow = 8;
-
+    //form the empty square object.
     for (var i = 1; i<=gridRow; i++) {
       var obj = {};
       for (var j=1; j <= gridCol ; j++) {
-        if (i%2===1) {
-          if (j%2==0) {
-             obj[j] = {color : 'black'};
-          } else {
-            obj[j] = {color : 'white'};
-          }
-        } else {
-          if (j%2==0) {
-             obj[j] = {color : 'white'};
-          } else {
-            obj[j] = {color : 'black'};
-          }
-        }
+        obj[j] = {};
       }
       square[i] = obj;
     }
@@ -43,23 +31,17 @@
         }
         return false;
       }
-      function isCheck(piece,pos) {
-        var newPosPositions = Piece[piece].getPossiblePositions(pos);
-        for (var i=0; i < newPosPositions.length; i++) {
-          if (square[newPosPositions[i].r][newPosPositions[i].c].Piece === "king") {
-            return true;
-          }
-        }
+      function isCheck() {
         return false;
       }
-      function getPiecePosition(pos) {
-        var obj = square[pos.r][pos.c];
+      function getPiecePosition(pos,color) {
             
-        if (obj.player === "black") {
+        if (color === "black") {
           return {r : gridRow -pos.r+1 , c : gridCol - pos.c + 1};
         }
         return pos;
       }
+
     return {
       //Fix the initial position of different pieces
       setInitialPos : function() {
@@ -67,24 +49,24 @@
           square[2][i] = {piece : 'pawn', player : 'white'};
           square[7][i] = {piece : 'pawn', player : 'black'};
           if (i===1 || i===8) {
-            square[1][i] = {Piece : 'rook', player : 'white'};
-            square[8][i] = {Piece : 'rook', player : 'black'};
+            square[1][i] = {piece : 'rook', player : 'white'};
+            square[8][i] = {piece : 'rook', player : 'black'};
           }
           if (i===2 || i===7) {
-            square[1][i] = {Piece : 'knight', player : 'white'};
-            square[8][i] = {Piece : 'knight', player : 'black'};
+            square[1][i] = {piece : 'knight', player : 'white'};
+            square[8][i] = {piece : 'knight', player : 'black'};
           }
           if (i===3 || i===6) {
-            square[1][i] = {Piece : 'bishop', player : 'white'};
-            square[8][i] = {Piece : 'bishop', player : 'black'};
+            square[1][i] = {piece : 'bishop', player : 'white'};
+            square[8][i] = {piece : 'bishop', player : 'black'};
           }
           if (i===4) {
-            square[1][i] = {Piece : 'queen', player : 'white'};
-            square[8][i] = {Piece : 'queen', player : 'black'};
+            square[1][i] = {piece : 'queen', player : 'white'};
+            square[8][i] = {piece : 'queen', player : 'black'};
           }
           if (i===5) {
-            square[1][i] = {Piece : 'king', player : 'white'};
-            square[8][i] = {Piece : 'king', player : 'black'};
+            square[1][i] = {piece : 'king', player : 'white'};
+            square[8][i] = {piece : 'king', player : 'black'};
           }
 
         }
@@ -94,25 +76,31 @@
         var oldObj = square[oldPos.r][oldPos.c];
         var newObj = square[newPos.r][newPos.c];
         
+        if (typeof(newObj.player) !== "undefined") {
+          if (oldObj.player === newObj.player) {
+            return {result : false, message : "Not a possible move."}
+          }
+        }
         var piece = oldObj.piece;
-        if (typeof(piece) === "undefined" ) {
+        if (typeof(piece) === "undefined" || piece === "") {
           return {result : false, message : "Nothing to move."};
         }
-        var posPositions = Piece[piece].getPossiblePositions(getPiecePosition(oldPos));
-        // console.log(JSON.stringify(posPositions) + ", new pos :"+JSON.stringify(newPos));
-        if(containsObj(posPositions,getPiecePosition(newPos))) {
+        var posPositions = Piece[piece].getPossiblePositions(getPiecePosition(oldPos,oldObj.player));
+
+        newPos.player = oldObj.player;
+        if(containsObj(posPositions,getPiecePosition(newPos,oldObj.player))) {
           var message = "Move successful. ";
           if (typeof(newObj.piece) != "undefined") {
+
             message = message + newObj.piece+ " is killed. "
             if (newObj.piece === "king") {
               message = message + "Checkmate.. hurray !!";
             }
           }
-          square[newPos.r][newPos.c] = oldObj;
-          delete square[oldPos.r][oldPos.c].piece;
-          delete square[oldPos.r][oldPos.c].player;
+          square[newPos.r][newPos.c] = JSON.parse(JSON.stringify(oldObj));
+          square[oldPos.r][oldPos.c] = {};
 
-          if (isCheck && newObj.piece != "king") {
+          if (isCheck() && newObj.piece != "king") {
             message = message + "Check to the opponent. ";
           }
           return {result : true,message : message};

@@ -67,11 +67,11 @@
         }
       },
       pawn : {
-        getPossiblePositions : function(pos,isInitial) {
+        getPossiblePositions : function(pos) {
           var posArray = [];
           if (pos.r < 8) {
             posArray.push({r:pos.r+1, c: pos.c});
-            if(isInitial && pos.r < 7){
+            if(pos.r ===2){
               posArray.push({r:pos.r+2, c: pos.c});
             }
             if (pos.c > 1) posArray.push({r:pos.r+1, c: pos.c-1}); 
@@ -110,11 +110,11 @@
   }
 
   function getDiagPositions(row,col,posArray) {
-          var min = Math.min(row,col);
+          var num = Math.max(row,col);
 
-          for (var i=1-min,max=8-min; i <= max; i++) {
-            if (i !=0 && col+i <=8  && col+i > 0 ) {
-              if(row+i <=8 && row+i >0) posArray.push({r : row+i, c : col+i});
+          for (var i=1-num,max=8-num; i <= max; i++) {
+            if (i !=0 && col+i > 0 && col+i <= 8) {
+              if(row+i > 0 && row+i <= 8) posArray.push({r : row+i, c : col+i});
               if(row-i <=8 && row-i >0) posArray.push({r : row-i, c : col+i});
             
             }

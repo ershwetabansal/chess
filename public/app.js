@@ -1,3 +1,3 @@
 /** Setting the angular module **/
 
-angular.module('Chess',['ui.router']);
+angular.module('Chess',['ui.router','ngDragDrop']);
